@@ -1,0 +1,1985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Johann Joseph Antony — Annual Report / Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Narrow:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0b1f3a;
+  --navy-2:#13294d;
+  --emerald:#1fa572;
+  --emerald-2:#2dd49b;
+  --slate:#3d4f63;
+  --slate-2:#5a6f88;
+  --off-white:#f2efe6;
+  --off-white-2:#e8e4d6;
+  --riso-red:#e0404b;
+  --grid-line:rgba(11,31,58,.08);
+  --serif:Georgia,'Times New Roman',serif;
+  --sans:'Archivo',system-ui,sans-serif;
+  --narrow:'Archivo Narrow',system-ui,sans-serif;
+  --display:'Anton',Impact,sans-serif;
+  --mono:'Space Mono','Courier New',monospace;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--off-white);
+  color:var(--navy);
+  overflow-x:hidden;
+  cursor:none;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.5;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+
+/* ===== CUSTOM CURSOR + DOT TRAIL ===== */
+.cursor-dot{
+  position:fixed;
+  width:8px;height:8px;
+  background:var(--navy);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:99998;
+  transform:translate(-50%,-50%);
+  mix-blend-mode:multiply;
+  transition:width .2s,height .2s,background .2s;
+}
+.cursor-dot.hover{width:24px;height:24px;background:var(--emerald);opacity:.6}
+.trail-dot{
+  position:fixed;
+  pointer-events:none;
+  z-index:99997;
+  border-radius:50%;
+  mix-blend-mode:multiply;
+  transform:translate(-50%,-50%);
+  animation:trailFade .8s ease-out forwards;
+}
+@keyframes trailFade{
+  0%{opacity:.5;transform:translate(-50%,-50%) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(.2)}
+}
+
+/* ===== RISOGRAPH DOT TEXTURE ===== */
+.riso-overlay{
+  position:fixed;inset:0;
+  pointer-events:none;
+  z-index:9999;
+  opacity:.12;
+  mix-blend-mode:multiply;
+  background-image:
+    radial-gradient(circle at 50% 50%, var(--navy) .5px, transparent .5px);
+  background-size:4px 4px;
+}
+.riso-overlay::after{
+  content:'';position:absolute;inset:0;
+  background-image:
+    radial-gradient(circle at 50% 50%, var(--riso-red) .5px, transparent .5px);
+  background-size:7px 7px;
+  background-position:0 0;
+  opacity:.3;
+}
+
+/* ===== GRID BG ===== */
+.grid-bg{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;
+}
+
+/* ===== PAGE NUMBER INDICATOR ===== */
+.page-indicator{
+  position:fixed;
+  bottom:24px;right:24px;
+  z-index:10000;
+  font-family:var(--mono);
+  font-size:.7rem;
+  color:var(--navy);
+  background:var(--off-white);
+  border:1px solid var(--navy);
+  padding:6px 14px;
+  letter-spacing:.1em;
+  display:flex;align-items:center;gap:8px;
+  user-select:none;
+}
+.page-indicator .num{font-weight:700;font-size:.85rem}
+.page-indicator .total{opacity:.4}
+.page-indicator .bar{
+  width:40px;height:2px;
+  background:var(--navy);position:relative;
+  overflow:hidden;
+}
+.page-indicator .bar-fill{
+  position:absolute;left:0;top:0;height:100%;
+  background:var(--emerald);
+  width:0%;transition:width .3s ease;
+}
+
+/* ===== SCROLL PROGRESS ===== */
+.scroll-progress{
+  position:fixed;top:0;left:0;height:3px;
+  background:var(--emerald);
+  z-index:10001;width:0%;transition:width .05s;
+}
+
+/* ===== SECTION BASE ===== */
+section{
+  position:relative;
+  min-height:100vh;
+  width:100%;
+  padding:80px 48px;
+  overflow:hidden;
+  border-bottom:1px solid var(--navy);
+}
+.section-label{
+  font-family:var(--mono);
+  font-size:.7rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--slate);
+  margin-bottom:8px;
+  display:flex;align-items:center;gap:12px;
+}
+.section-label::before{
+  content:'';width:40px;height:1px;background:var(--navy);
+}
+.spread-transition{
+  opacity:0;
+  transform:translateX(20px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.spread-transition.in-view{
+  opacity:1;transform:translateX(0);
+}
+
+/* ===== HERO ===== */
+#hero{
+  display:flex;flex-direction:column;justify-content:center;
+  background:var(--off-white);
+  min-height:100vh;
+  padding:60px 48px;
+}
+.hero-name{
+  font-family:var(--display);
+  line-height:.82;
+  letter-spacing:-.02em;
+  text-transform:uppercase;
+  position:relative;
+  z-index:2;
+}
+.hero-name .ln{display:block;overflow:hidden}
+.hero-name .ln span{
+  display:inline-block;
+  font-size:clamp(4.5rem,13vw,13rem);
+  color:var(--navy);
+}
+.hero-name .ln:nth-child(1) span{padding-left:0}
+.hero-name .ln:nth-child(2) span{padding-left:6vw;color:var(--emerald)}
+.hero-name .ln:nth-child(3) span{padding-left:2vw}
+.hero-tagline{
+  font-family:var(--narrow);
+  font-weight:600;
+  font-size:clamp(.8rem,1.6vw,1.1rem);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--slate);
+  margin-top:24px;
+  display:flex;gap:16px;align-items:center;
+}
+.hero-tagline span{display:inline-block}
+.hero-tagline .dot{
+  width:6px;height:6px;border-radius:50%;background:var(--riso-red);
+  display:inline-block;
+}
+.hero-meta{
+  position:absolute;
+  top:32px;right:48px;
+  font-family:var(--mono);
+  font-size:.7rem;
+  color:var(--navy);
+  text-align:right;
+  letter-spacing:.1em;
+}
+.hero-meta .yr{font-family:var(--display);font-size:2.5rem;display:block;line-height:1;color:var(--emerald)}
+.hero-bleed{
+  position:absolute;inset:0;pointer-events:none;
+  z-index:1;opacity:.5;
+}
+.hero-bleed svg{width:100%;height:100%}
+.hero-scroll-cue{
+  position:absolute;bottom:48px;left:48px;
+  font-family:var(--mono);font-size:.65rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--slate);
+  display:flex;align-items:center;gap:12px;
+}
+.hero-scroll-cue .arrow{
+  display:inline-block;width:1px;height:40px;background:var(--navy);
+  position:relative;animation:scrollPulse 2s infinite;
+}
+.hero-scroll-cue .arrow::after{
+  content:'';position:absolute;bottom:0;left:-3px;
+  width:7px;height:7px;border-right:1px solid var(--navy);border-bottom:1px solid var(--navy);
+  transform:rotate(45deg);
+}
+@keyframes scrollPulse{
+  0%,100%{opacity:.3}50%{opacity:1}
+}
+/* Kinetic letter animation */
+.kinetic-letter{
+  opacity:0;
+  will-change:transform,opacity;
+}
+
+/* ===== ABOUT SPREAD ===== */
+#about{
+  display:grid;
+  grid-template-columns:1fr 1.3fr;
+  gap:64px;
+  align-items:start;
+  padding-top:100px;
+}
+.about-portrait-wrap{
+  position:relative;
+  aspect-ratio:3/4;
+  overflow:hidden;
+  border:2px solid var(--navy);
+}
+.about-portrait{
+  width:100%;height:100%;
+  background:linear-gradient(135deg,#2a3f5f,#1a2a40);
+  position:relative;
+  filter:contrast(1.1) saturate(.3);
+}
+.about-portrait::after{
+  content:'';position:absolute;inset:0;
+  background:
+    linear-gradient(135deg,rgba(31,165,114,.4),transparent 60%),
+    radial-gradient(ellipse at 30% 40%,rgba(11,31,58,.6),transparent 70%);
+  mix-blend-mode:screen;
+}
+.about-portrait .silhouette{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);font-size:8rem;
+  color:rgba(242,239,230,.08);
+  letter-spacing:-.03em;
+}
+.about-portrait-wrap::before{
+  content:'FIG.01';
+  position:absolute;top:-24px;left:0;
+  font-family:var(--mono);font-size:.65rem;
+  letter-spacing:.15em;color:var(--slate);
+}
+.about-right{padding-top:0}
+.pull-quote{
+  font-family:var(--display);
+  font-size:clamp(1.8rem,3.5vw,3.2rem);
+  line-height:1.05;
+  color:var(--navy);
+  margin-bottom:40px;
+  position:relative;
+}
+.pull-quote .em{color:var(--emerald)}
+.pull-quote::before{
+  content:'"';
+  font-family:var(--serif);
+  font-size:6rem;
+  position:absolute;top:-40px;left:-20px;
+  color:var(--riso-red);opacity:.3;
+}
+.about-body{
+  font-family:var(--sans);
+  font-size:1rem;
+  line-height:1.7;
+  color:var(--slate);
+  max-width:60ch;
+  margin-bottom:24px;
+}
+.about-body strong{color:var(--navy);font-weight:700}
+.about-tags{
+  display:flex;flex-wrap:wrap;gap:8px;
+  margin-top:32px;
+}
+.about-tags .tag{
+  font-family:var(--mono);font-size:.65rem;
+  padding:6px 12px;border:1px solid var(--navy);
+  letter-spacing:.1em;text-transform:uppercase;
+}
+.about-tags .tag.alt{background:var(--navy);color:var(--off-white)}
+
+/* ===== PROJECT SPREADS ===== */
+.spread{
+  position:relative;
+  min-height:100vh;
+  padding:80px 48px;
+}
+.spread-header{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:48px;
+}
+.spread-num{
+  font-family:var(--mono);font-size:.7rem;
+  letter-spacing:.15em;color:var(--slate);
+}
+.spread-title-block{
+  display:flex;flex-direction:column;gap:4px;
+}
+.spread-subhead{
+  font-family:var(--narrow);font-weight:600;
+  font-size:1rem;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--riso-red);
+}
+.spread-headline{
+  font-family:var(--display);
+  font-size:clamp(3rem,8vw,8rem);
+  line-height:.9;
+  text-transform:uppercase;
+  letter-spacing:-.01em;
+  margin:12px 0 32px;
+}
+.spread-content{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:48px;
+  align-items:start;
+}
+.spread-visual{
+  position:relative;
+  aspect-ratio:4/3;
+  overflow:hidden;
+  border:2px solid var(--navy);
+}
+.spread-copy{
+  font-size:.95rem;line-height:1.7;color:var(--slate);
+}
+.spread-copy p{margin-bottom:16px}
+.spread-copy strong{color:var(--navy)}
+.spread-copy .lead{
+  font-family:var(--narrow);font-weight:600;
+  font-size:1.15rem;color:var(--navy);
+  margin-bottom:20px;
+}
+
+/* === Spread 1: Circular Fashion === */
+#spread1 .spread-visual{
+  background:
+    linear-gradient(135deg,var(--emerald) 0%,var(--navy) 100%);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+#spread1 .spread-visual::after{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle at 50% 50%,rgba(255,255,255,.08) 1px,transparent 1px);
+  background-size:8px 8px;
+}
+.shoe-placeholder{
+  width:60%;height:auto;
+  position:relative;z-index:2;
+  filter:grayscale(.3) contrast(1.1);
+}
+.shoe-placeholder svg{width:100%;height:auto}
+.finalist-badge{
+  position:absolute;
+  top:24px;right:24px;
+  width:90px;height:90px;
+  z-index:10;
+}
+.finalist-badge .badge-circle{
+  width:100%;height:100%;
+  border:2px solid var(--riso-red);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  background:rgba(224,64,75,.05);
+}
+.finalist-badge .badge-text{
+  font-family:var(--mono);
+  font-size:.5rem;letter-spacing:.1em;
+  text-align:center;
+  color:var(--riso-red);font-weight:700;
+  line-height:1.2;
+ text-transform:uppercase;
+}
+.finalist-badge .badge-ring{
+  position:absolute;inset:-6px;
+  border:1px dashed var(--riso-red);
+  border-radius:50%;
+  animation:badgeSpin 20s linear infinite;
+}
+@keyframes badgeSpin{to{transform:rotate(360deg)}}
+.finalist-badge.spin-once .badge-circle{
+  animation:badgeSpinOnce .8s ease-out;
+}
+@keyframes badgeSpinOnce{
+  from{transform:rotate(0)}
+  to{transform:rotate(360deg)}
+}
+
+/* === Color palette film strip === */
+.palette-strip{
+  display:flex;gap:0;
+  margin-top:24px;
+  overflow:hidden;
+  border-top:1px solid var(--navy);
+  border-bottom:1px solid var(--navy);
+  height:48px;
+}
+.palette-strip .swatch{
+  flex:1;min-width:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:.5rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  transition:flex .4s ease;
+  border-right:1px solid rgba(0,0,0,.1);
+  white-space:nowrap;overflow:hidden;
+}
+.palette-strip:hover .swatch{flex:.5}
+.palette-strip .swatch:hover{flex:3}
+.swatch.navy{background:var(--navy);color:var(--off-white)}
+.swatch.emerald{background:var(--emerald);color:var(--off-white)}
+.swatch.slate{background:var(--slate);color:var(--off-white)}
+.swatch.offwhite{background:var(--off-white-2);color:var(--navy)}
+.swatch.riso{background:var(--riso-red);color:var(--off-white)}
+
+/* === Spread 2: Rent A Tree === */
+#spread2 .spread-visual{
+  background:var(--off-white-2);
+  position:relative;
+  border:2px solid var(--navy);
+}
+.tree-mockup{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  padding:20px;
+}
+.tree-mockup .mock-nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-bottom:12px;border-bottom:1px solid var(--navy);
+  font-family:var(--mono);font-size:.6rem;
+ color:var(--navy);letter-spacing:.1em;
+}
+.tree-mockup .mock-body{
+  flex:1;display:flex;gap:16px;padding:16px 0;
+}
+.tree-mockup .mock-side{
+  width:80px;display:flex;flex-direction:column;gap:8px;
+}
+.tree-mockup .mock-side-item{
+  height:28px;background:rgba(11,31,58,.06);
+  border-left:3px solid var(--emerald);
+  font-family:var(--mono);font-size:.5rem;
+  display:flex;align-items:center;padding-left:8px;
+  color:var(--slate);
+}
+.tree-mockup .mock-main{
+  flex:1;
+  background:linear-gradient(180deg,rgba(31,165,114,.08),rgba(11,31,58,.04));
+  border:1px solid rgba(11,31,58,.15);
+  position:relative;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.tree-icon{width:60px;height:80px;position:relative}
+.tree-icon svg{width:100%;height:100%}
+.tree-mockup .mock-stats{
+  display:flex;gap:24px;margin-top:12px;
+  font-family:var(--mono);font-size:.5rem;color:var(--navy);
+}
+.tree-mockup .mock-stat{text-align:center}
+.tree-mockup .mock-stat .v{font-family:var(--display);font-size:1.5rem;color:var(--emerald);display:block}
+.co2-chart{
+  margin-top:32px;
+  padding:20px;
+  border:1px solid var(--navy);
+  background:var(--off-white);
+  position:relative;
+}
+.co2-chart .chart-title{
+  font-family:var(--mono);font-size:.65rem;
+  letter-spacing:.1em;color:var(--slate);
+  text-transform:uppercase;margin-bottom:16px;
+}
+.co2-bars{
+  display:flex;align-items:flex-end;gap:12px;
+  height:140px;border-bottom:2px solid var(--navy);
+  padding-bottom:0;
+}
+.co2-bars .bar-col{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
+}
+.co2-bars .bar{
+  width:100%;
+  background:var(--emerald);
+  position:relative;
+  transition:height .8s cubic-bezier(.22,1,.36,1);
+}
+.co2-bars .bar.navy-bar{background:var(--navy)}
+.co2-bars .bar-val{
+  font-family:var(--mono);font-size:.5rem;
+  color:var(--navy);font-weight:700;
+  position:absolute;top:-16px;left:50%;transform:translateX(-50%);
+}
+.co2-bars .bar-label{
+  font-family:var(--mono);font-size:.5rem;color:var(--slate);
+}
+.co2-chart .chart-legend{
+  display:flex;gap:16px;margin-top:12px;
+  font-family:var(--mono);font-size:.55rem;color:var(--slate);
+}
+.co2-chart .chart-legend .dot{width:8px;height:8px;display:inline-block;margin-right:6px}
+
+/* === Spread 3: Graphene Hydrogen === */
+#spread3{background:var(--navy);color:var(--off-white)}
+#spread3 .section-label{color:rgba(242,239,230,.5)}
+#spread3 .section-label::before{background:var(--off-white)}
+#spread3 .spread-num{color:rgba(242,239,230,.4)}
+#spread3 .spread-headline{color:var(--off-white)}
+#spread3 .spread-subhead{color:var(--emerald-2)}
+#spread3 .spread-copy{color:rgba(242,239,230,.7)}
+#spread3 .spread-copy strong{color:var(--off-white)}
+#spread3 .spread-copy .lead{color:var(--off-white)}
+#spread3 .spread-visual{
+  background:#0a1830;
+  border:2px solid var(--emerald);
+  position:relative;
+}
+#spread3 .spread-visual::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(31,165,114,.08) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(31,165,114,.08) 1px,transparent 1px);
+  background-size:20px 20px;
+}
+.blueprint-svg{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+}
+.blueprint-svg svg{width:100%;height:100%}
+#spread3 .palette-strip{border-color:var(--off-white)}
+#spread3 .palette-strip .swatch{border-color:rgba(255,255,255,.1)}
+#spread3 .palette-strip .swatch.offwhite{background:rgba(242,239,230,.1);color:var(--off-white)}
+
+/* === Spread 4: C² STEM Racing === */
+#spread4 .spread-visual{
+  background:linear-gradient(135deg,#1a1a1a,#2a2a2a);
+  position:relative;overflow:hidden;
+}
+#spread4 .spread-visual::after{
+  content:'';position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(224,64,75,.04) 10px,rgba(224,64,75,.04) 11px);
+}
+.racing-action{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.racing-action svg{width:80%;height:auto;opacity:.8}
+.timeline-graphic{
+  margin-top:32px;
+  padding:24px 0;
+  position:relative;
+}
+.timeline-line{
+  height:2px;background:var(--navy);position:relative;
+  margin:40px 0;
+}
+.timeline-node{
+  position:absolute;top:50%;transform:translate(-50%,-50%);
+  display:flex;flex-direction:column;align-items:center;
+}
+.timeline-node .dot{
+  width:14px;height:14px;border-radius:50%;
+  background:var(--off-white);border:2px solid var(--navy);
+  z-index:2;position:relative;
+}
+.timeline-node.active .dot{background:var(--emerald);border-color:var(--emerald)}
+.timeline-node .label{
+  position:absolute;top:20px;
+  font-family:var(--mono);font-size:.55rem;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--navy);white-space:nowrap;
+  text-align:center;
+}
+.timeline-node .phase{
+  position:absolute;bottom:20px;
+  font-family:var(--display);font-size:1.2rem;
+  color:var(--navy);line-height:1;
+}
+.timeline-node.active .phase{color:var(--emerald)}
+
+/* === Spread 5: LOCAI === */
+#spread5 .spread-visual{
+  background:linear-gradient(180deg,var(--off-white-2),var(--off-white));
+  position:relative;
+  border:2px solid var(--navy);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:24px;
+}
+.locai-logo{
+  width:120px;height:120px;
+  position:relative;
+  margin-bottom:20px;
+}
+.locai-logo svg{width:100%;height:100%}
+.locai-logo .stroke-path{
+  stroke:var(--navy);
+  stroke-width:3;
+  fill:none;
+  stroke-dasharray:400;
+  stroke-dashoffset:400;
+}
+.locai-logo.draw .stroke-path{
+  animation:drawStroke 2s ease-out forwards;
+}
+@keyframes drawStroke{to{stroke-dashoffset:0}}
+.locai-tagline{
+  font-family:var(--mono);font-size:.6rem;
+  letter-spacing:.15em;color:var(--slate);
+  text-transform:uppercase;
+}
+.locai-interface{
+  margin-top:20px;width:100%;
+  display:flex;gap:12px;
+}
+.locai-interface .panel{
+  flex:1;background:rgba(11,31,58,.04);
+  border:1px solid rgba(11,31,58,.15);
+  padding:10px;
+  font-family:var(--mono);font-size:.5rem;color:var(--slate);
+}
+.locai-interface .panel .ph{height:8px;background:rgba(11,31,58,.1);margin-bottom:6px;border-radius:2px}
+.locai-interface .panel .ph:nth-child(1){width:80%}
+.locai-interface .panel .ph:nth-child(2){width:60%}
+.locai-interface .panel .ph:nth-child(3){width:90%}
+.arch-diagram{
+  margin-top:32px;
+  padding:20px;
+  border:1px solid var(--navy);
+  background:var(--off-white);
+  position:relative;
+}
+.arch-diagram .arch-title{
+  font-family:var(--mono);font-size:.65rem;
+  letter-spacing:.1em;color:var(--slate);
+  text-transform:uppercase;margin-bottom:16px;
+}
+.arch-svg{width:100%;height:auto}
+.arch-svg svg{width:100%;height:auto}
+
+/* ===== IMPACT METRICS ===== */
+#metrics{
+  background:var(--navy);
+  color:var(--off-white);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:100px 48px;
+}
+#metrics .section-label{color:rgba(242,239,230,.5)}
+#metrics .section-label::before{background:var(--off-white)}
+.metrics-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:0;
+  margin-top:60px;
+}
+.metric-cell{
+  padding:32px 24px;
+  border-right:1px solid rgba(242,239,230,.15);
+  border-bottom:1px solid rgba(242,239,230,.15);
+  position:relative;
+}
+.metric-cell:nth-child(4n){border-right:none}
+.metric-cell:nth-child(n+5){border-bottom:none}
+.metric-num{
+  font-family:var(--display);
+  font-size:clamp(4rem,10vw,10rem);
+  line-height:.85;
+  color:var(--emerald-2);
+  display:block;
+}
+.metric-label{
+  font-family:var(--narrow);font-weight:600;
+  font-size:.8rem;letter-spacing:.05em;
+  text-transform:uppercase;
+  color:rgba(242,239,230,.6);
+  margin-top:12px;
+  display:block;
+}
+.metric-sub{
+  font-family:var(--mono);font-size:.6rem;
+  color:rgba(242,239,230,.35);
+  margin-top:6px;
+}
+
+/* ===== DOWNLOADABLES ===== */
+#downloads{
+  background:var(--off-white);
+  position:relative;
+  overflow:visible;
+}
+#downloads .grid-bg{background-size:40px 40px;background-image:linear-gradient(var(--grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--grid-line) 1px,transparent 1px)}
+.downloads-container{
+  position:relative;
+  margin-top:48px;
+  min-height:420px;
+}
+.file-tab{
+  position:absolute;
+  background:var(--off-white);
+  border:2px solid var(--navy);
+  padding:0;
+  cursor:grab;
+  user-select:none;
+  z-index:5;
+  width:200px;
+  box-shadow:4px 4px 0 var(--navy);
+  transition:box-shadow .15s,transform .15s;
+  touch-action:none;
+}
+.file-tab:active{cursor:grabbing;box-shadow:0 0 0 var(--navy);transform:translate(4px,4px)}
+.file-tab .tab-head{
+  background:var(--navy);
+  color:var(--off-white);
+  padding:8px 16px;
+  font-family:var(--mono);
+  font-size:.6rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.file-tab .tab-head .grip{
+  display:flex;gap:2px;
+}
+.file-tab .tab-head .grip span{
+  width:3px;height:10px;background:var(--emerald-2);
+}
+.file-tab .tab-body{
+  padding:16px;
+  display:flex;flex-direction:column;gap:8px;
+}
+.file-tab .tab-icon{
+  width:40px;height:48px;
+  border:1.5px solid var(--navy);
+  position:relative;
+  margin:0 auto 8px;
+}
+.file-tab .tab-icon::before{
+  content:'';position:absolute;top:0;right:0;
+  width:12px;height:12px;
+  background:var(--off-white);
+  border-left:1.5px solid var(--navy);
+  border-bottom:1.5px solid var(--navy);
+}
+.file-tab .tab-icon .ext{
+  position:absolute;bottom:4px;left:50%;transform:translateX(-50%);
+  font-family:var(--mono);font-size:.45rem;font-weight:700;
+  color:var(--navy);letter-spacing:.05em;
+}
+.file-tab .tab-name{
+  font-family:var(--narrow);font-weight:700;
+  font-size:.75rem;text-align:center;
+  color:var(--navy);line-height:1.3;
+}
+.file-tab .tab-download{
+  margin-top:8px;
+  background:var(--emerald);
+  color:var(--off-white);
+  text-align:center;padding:8px;
+  font-family:var(--mono);font-size:.6rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;transition:background .2s;
+}
+.file-tab .tab-download:hover{background:var(--navy)}
+.file-tab.snapping{
+  transition:transform .3s cubic-bezier(.22,1,.36,1);
+}
+.file-tab .tab-type{
+  position:absolute;top:-10px;left:-2px;
+  background:var(--riso-red);color:var(--off-white);
+  font-family:var(--mono);font-size:.5rem;
+  padding:2px 8px;letter-spacing:.1em;
+  transform:rotate(-3deg);
+}
+
+/* ===== LECTURES & TALKS ===== */
+#talks{
+  background:var(--off-white-2);
+}
+.talks-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:32px;
+  margin-top:48px;
+}
+.crt-monitor{
+  position:relative;
+  border-radius:12px 12px 4px 4px;
+  padding:20px 16px 16px;
+  background:#1a1a1a;
+  border:3px solid #2a2a2a;
+  box-shadow:0 0 0 1px #3a3a3a, 6px 6px 0 rgba(11,31,58,.15);
+}
+.crt-screen{
+  position:relative;
+  aspect-ratio:4/3;
+  background:#0a0a0a;
+  border-radius:6px;
+  overflow:hidden;
+  border:2px solid #333;
+}
+.crt-screen .crt-content{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  color:var(--emerald-2);
+  font-family:var(--mono);font-size:.8rem;
+  text-align:center;padding:20px;
+}
+.crt-screen .crt-content .talk-title{
+  font-family:var(--display);font-size:1.4rem;
+  color:var(--emerald-2);margin-bottom:8px;
+  text-transform:uppercase;
+}
+.crt-screen .crt-content .talk-meta{
+  font-size:.6rem;color:rgba(45,212,155,.5);
+  letter-spacing:.1em;
+}
+.crt-screen .play-btn{
+  width:48px;height:48px;border-radius:50%;
+  border:2px solid var(--emerald-2);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:16px;cursor:pointer;
+  transition:background .2s,transform .2s;
+}
+.crt-screen .play-btn:hover{background:rgba(45,212,155,.15);transform:scale(1.1)}
+.crt-screen .play-btn::after{
+  content:'';width:0;height:0;
+  border-left:12px solid var(--emerald-2);
+  border-top:8px solid transparent;
+  border-bottom:8px solid transparent;
+  margin-left:4px;
+}
+/* Scanline effect */
+.crt-screen::before{
+  content:'';position:absolute;inset:0;z-index:3;
+  background:repeating-linear-gradient(0deg,
+    rgba(0,0,0,.15) 0px,
+    rgba(0,0,0,.15) 1px,
+    transparent 1px,
+    transparent 3px);
+  pointer-events:none;
+  animation:scanlineMove 8s linear infinite;
+}
+@keyframes scanlineMove{to{background-position:0 100%}}
+.crt-screen::after{
+  content:'';position:absolute;inset:0;z-index:4;
+  background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.4) 100%);
+  pointer-events:none;
+}
+.crt-stand{
+  width:40%;height:14px;margin:0 auto;
+  background:#2a2a2a;border-radius:0 0 6px 6px;
+  margin-top:0;
+}
+.crt-base{
+  width:60%;height:6px;margin:0 auto;
+  background:#333;border-radius:0 0 8px 8px;
+}
+
+/* ===== CONTACT ===== */
+#contact{
+  background:var(--navy);
+  color:var(--off-white);
+  display:flex;flex-direction:column;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+  min-height:100vh;
+}
+#contact .section-label{color:rgba(242,239,230,.5)}
+#contact .section-label::before{background:var(--off-white)}
+.contact-headline{
+  font-family:var(--display);
+  font-size:clamp(4rem,14vw,14rem);
+  line-height:.85;
+  text-transform:uppercase;
+  letter-spacing:-.02em;
+  margin:24px 0 48px;
+}
+.contact-headline .ln2{color:var(--emerald-2);padding-left:4vw}
+.email-block{
+  display:block;
+  background:var(--emerald);
+  color:var(--navy);
+  padding:24px 40px;
+  font-family:var(--display);
+  font-size:clamp(1.5rem,4vw,3.5rem);
+  text-transform:lowercase;
+  letter-spacing:-.01em;
+  width:fit-content;
+  max-width:100%;
+  border:2px solid var(--emerald);
+  transition:background .2s,color .2s,transform .15s;
+  margin-bottom:48px;
+  word-break:break-all;
+}
+.email-block:hover{
+  background:var(--off-white);
+  color:var(--navy);
+  transform:translate(-4px,-4px);
+  box-shadow:8px 8px 0 var(--emerald);
+}
+.social-links{
+  display:flex;flex-wrap:wrap;gap:32px;
+  font-family:var(--narrow);font-weight:600;
+  font-size:1rem;text-transform:uppercase;
+  letter-spacing:.05em;
+}
+.social-links a{
+  border-bottom:2px solid var(--emerald-2);
+  padding-bottom:2px;
+  transition:color .2s,border-color .2s;
+}
+.social-links a:hover{color:var(--emerald-2);border-color:var(--off-white)}
+.footer-bar{
+  position:absolute;bottom:32px;left:48px;right:48px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--mono);font-size:.6rem;
+  color:rgba(242,239,230,.4);
+  letter-spacing:.1em;text-transform:uppercase;
+  border-top:1px solid rgba(242,239,230,.15);
+  padding-top:16px;
+}
+/* Singapore map background */
+.sg-map-bg{
+  position:absolute;inset:0;
+  z-index:0;opacity:.06;
+  pointer-events:none;
+}
+.sg-map-bg svg{width:100%;height:100%}
+
+/* ===== DOT PATTERNS ===== */
+.dot-pattern{
+  background-image:radial-gradient(circle,var(--navy) 1px,transparent 1px);
+  background-size:10px 10px;
+}
+.dot-pattern-light{
+  background-image:radial-gradient(circle,rgba(242,239,230,.2) 1px,transparent 1px);
+  background-size:10px 10px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  section{padding:60px 24px}
+  #about{grid-template-columns:1fr;gap:32px}
+  .spread-content{grid-template-columns:1fr;gap:24px}
+  .metrics-grid{grid-template-columns:repeat(2,1fr)}
+  .metric-cell:nth-child(4n){border-right:1px solid rgba(242,239,230,.15)}
+  .metric-cell:nth-child(2n){border-right:none}
+  .metric-cell:nth-child(n+5){border-bottom:1px solid rgba(242,239,230,.15)}
+  .metric-cell:nth-child(n+7){border-bottom:none}
+  .hero-meta{display:none}
+  .hero-tagline{font-size:.75rem}
+  .file-tab{width:160px}
+  .footer-bar{left:24px;right:24px;flex-direction:column;gap:8px;text-align:center}
+  .hero-name .ln:nth-child(2) span{padding-left:8vw}
+  .hero-name .ln:nth-child(3) span{padding-left:4vw}
+  body{cursor:auto}
+  .cursor-dot,.trail-dot{display:none}
+}
+@media(max-width:600px){
+  .talks-grid{grid-template-columns:1fr}
+  .social-links{flex-direction:column;gap:16px}
+  .co2-bars{gap:6px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<!-- RISOGRAPH OVERLAY -->
+<div class="riso-overlay"></div>
+
+<!-- SCROLL PROGRESS -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- PAGE INDICATOR -->
+<div class="page-indicator" id="pageIndicator">
+  <span class="num" id="pageNum">01</span>
+  <span class="bar"><span class="bar-fill" id="barFill"></span></span>
+  <span class="total" id="pageTotal">/ 08</span>
+</div>
+
+<!-- ============================ HERO ============================ -->
+<section id="hero">
+  <div class="grid-bg"></div>
+  <div class="hero-bleed">
+    <svg viewBox="0 0 1200 800" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="dotBleed" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+          <circle cx="3" cy="3" r="1" fill="#0b1f3a" opacity=".15"/>
+        </pattern>
+        <pattern id="dotBleedR" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+          <circle cx="4" cy="4" r="1" fill="#e0404b" opacity=".1"/>
+        </pattern>
+      </defs>
+      <rect x="0" y="0" width="200" height="800" fill="url(#dotBleed)"/>
+      <rect x="1000" y="0" width="200" height="800" fill="url(#dotBleedR)"/>
+      <rect x="0" y="700" width="1200" height="100" fill="url(#dotBleed)"/>
+    </svg>
+  </div>
+
+  <div class="hero-meta">
+    <span class="yr">25</span>
+    ANNUAL REPORT<br>
+    VOL. I  </div>
+
+  <div class="hero-name" id="heroName">
+    <div class="ln"><span class="kinetic-wrap" data-text="JOHANN"></span></div>
+    <div class="ln"><span class="kinetic-wrap" data-text="JOSEPH"></span></div>
+    <div class="ln"><span class="kinetic-wrap" data-text="ANTONY"></span></div>
+  </div>
+
+  <div class="hero-tagline">
+    <span>Grade 12</span>
+  </div>
+
+  <div class="hero-scroll-cue">
+    <span>Scroll to read</span>
+    <span class="arrow"></span>
+  </div>
+</section>
+
+<!-- ============================ ABOUT ============================ -->
+<section id="about" class="spread-transition">
+  <div class="grid-bg"></div>
+  <div class="section-label">About </div>
+  <div class="about-portrait-wrap">
+    <div class="about-portrait">
+      <div class="silhouette">JJA</div>
+    </div>
+  </div>
+  <div class="about-right">
+    <div class="pull-quote">
+      I thrive at the intersection of <span class="em">STEM, business,</span> and social innovation.
+    </div>
+    <p class="about-body">
+      Johann Joseph Antony is a <strong>Grade 12 student at GIIS</strong> and a social entrepreneur at the convergence of technology and human-centered design. His work spans circular fashion, carbon offset platforms and sustainable transportation — each project a deliberate collision of engineering rigour and social purpose.
+    </p>
+    <div class="about-tags">
+      <div class="tag alt">GIIS · Grade 12</div>
+      <div class="tag">Blue Dot Impact · AI</div>
+      <div class="tag">Social Entrepreneur</div>
+      <div class="tag">Resource Manager</div>
+      <div class="tag">Circular Design</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ SPREAD 1: CIRCULAR FASHION ============================ -->
+<section id="spread1" class="spread spread-transition">
+  <div class="grid-bg"></div>
+  <div class="spread-header">
+    <div>
+      <div class="section-label">Project 01</div>
+      <div class="spread-num">SPREAD 01 / 05</div>
+    </div>
+    <div class="spread-title-block">
+      <div class="spread-subhead">FedEx / JA International Trade Challenge</div>
+    </div>
+  </div>
+  <div class="spread-headline">CIRCULAR<br>FASHION</div>
+  <div class="spread-content">
+    <div class="spread-visual">
+      <div class="finalist-badge" id="finalistBadge">
+        <div class="badge-ring"></div>
+        <div class="badge-circle">
+          <div class="badge-text">★<br>FINAL<br>IST</div>
+        </div>
+      </div>
+      <div class="shoe-placeholder">
+        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="shoeGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#f2efe6" stop-opacity=".9"/>
+              <stop offset="100%" stop-color="#1fa572" stop-opacity=".7"/>
+            </linearGradient>
+          </defs>
+          <ellipse cx="150" cy="180" rx="120" ry="12" fill="#0b1f3a" opacity=".2"/>
+          <path d="M 60 140 Q 50 100 70 85 L 120 75 Q 140 70 165 80 L 220 90 Q 250 95 260 120 L 260 155 Q 255 165 240 165 L 80 165 Q 60 165 55 155 Z" fill="url(#shoeGrad)" stroke="#0b1f3a" stroke-width="2"/>
+          <path d="M 70 85 Q 80 95 90 88" fill="none" stroke="#0b1f3a" stroke-width="1.5" opacity=".4"/>
+          <path d="M 100 78 Q 110 88 120 80" fill="none" stroke="#0b1f3a" stroke-width="1.5" opacity=".4"/>
+          <path d="M 130 73 Q 140 83 150 76" fill="none" stroke="#0b1f3a" stroke-width="1.5" opacity=".4"/>
+          <circle cx="150" cy="120" r="6" fill="#e0404b" opacity=".6"/>
+          <text x="150" y="125" font-family="monospace" font-size="5" fill="#0b1f3a" text-anchor="middle">RECYCLED</text>
+          <path d="M 60 155 L 260 155" stroke="#0b1f3a" stroke-width="3" opacity=".3"/>
+        </svg>
+      </div>
+    </div>
+    <div class="spread-copy">
+      <p class="lead">A sustainable footwear concept built from upcycled Pakistani textile waste — proving that cross-border circular design can compete on the global stage.</p>
+<p>Designed for the <strong>FedEx / Junior Achievement International Trade Challenge</strong>, this project reimagines the sneaker lifecycle from Lahore to Shenzhen. The upper is constructed from <strong>upcycled Pakistani textile waste</strong>, sourced from garment industry offcuts and deadstock, while manufacturing and assembly are anchored in <strong>China</strong> to leverage established footwear infrastructure and regional trade routes.</p>
+<p>The concept targets a <strong>60% reduction in raw material waste</strong> and a fully circular end-of-life pipeline: worn shoes are returned, shredded, and reborn as the next production run. No virgin fabrics. No landfill. Just loops — stitched across borders.</p>
+<p>The prototype earned <strong>Finalist placement</strong> — recognised for its combination of material innovation, Pakistan-to-China supply-chain thinking, and commercial viability across cross-border trade scenarios.</p>   </div>
+  </div>
+  <div class="palette-strip">
+    <div class="swatch navy">Navy</div>
+    <div class="swatch emerald">Emerald</div>
+    <div class="swatch slate">Slate</div>
+    <div class="swatch offwhite">Off-White</div>
+    <div class="swatch riso">Riso Red</div>
+  </div>
+</section>
+
+<!-- ============================ SPREAD 2: RENT A TREE ============================ -->
+<section id="spread2" class="spread spread-transition">
+  <div class="grid-bg"></div>
+  <div class="spread-header">
+    <div>
+      <div class="section-label">Project 02</div>
+      <div class="spread-num">SPREAD 02 / 05</div>
+    </div>
+    <div class="spread-title-block">
+      <div class="spread-subhead">GIIS Progressio 2023 · Second Place</div>
+    </div>
+  </div>
+  <div class="spread-headline">RENT<br>A TREE</div>
+  <div class="spread-content">
+    <div class="spread-visual">
+      <div class="tree-mockup">
+        <div class="mock-nav">
+          <span>◢ RENTATREE.SG</span>
+          <span>DASHBOARD ▾</span>
+        </div>
+        <div class="mock-body">
+          <div class="mock-side">
+            <div class="mock-side-item">Overview</div>
+            <div class="mock-side-item">My Trees</div>
+            <div class="mock-side-item">Offset</div>
+            <div class="mock-side-item">Farmers</div>
+            <div class="mock-side-item">Settings</div>
+          </div>
+          <div class="mock-main">
+            <div class="tree-icon">
+              <svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="30" cy="25" r="20" fill="#1fa572" opacity=".8"/>
+                <circle cx="20" cy="35" r="12" fill="#1fa572" opacity=".6"/>
+                <circle cx="40" cy="35" r="12" fill="#1fa572" opacity=".6"/>
+                <rect x="27" y="40" width="6" height="30" fill="#0b1f3a" opacity=".7"/>
+                <path d="M 15 70 L 45 70" stroke="#0b1f3a" stroke-width="2" opacity=".3"/>
+              </svg>
+            </div>
+            <div class="mock-stats">
+              <div class="mock-stat"><span class="v">42</span>Trees Rented</div>
+              <div class="mock-stat"><span class="v">1.2t</span>CO₂ Offset</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="spread-copy">
+      <p class="lead">A platform connecting individuals and corporations with farmers to rent trees — turning carbon offsetting into a transparent, traceable transaction.</p>
+      <p>Traditional carbon offsets are opaque. <strong>Rent A Tree</strong> makes them visible. Users browse a marketplace of real trees managed by partner farmers, rent them by the month, and watch their CO₂ sequestration accrue in real time through a live dashboard.</p>
+      <p>The platform bridges three constituencies: <strong>individuals</strong> who want personal climate action, <strong>companies</strong> seeking ESG-grade offsets, and <strong>farmers</strong> who earn recurring revenue for maintaining tree cover. It's offsetting reimagined as a service — not a guilt payment, but a relationship.</p>
+      <p>The venture placed <strong>Second at GIIS Progressio 2023</strong>, recognised for its innovative market mechanism and direct impact measurability.</p>
+    </div>
+  </div>
+  <div class="co2-chart">
+    <div class="chart-title">FIG.02 — Projected CO₂ Offset (tonnes) · Year 1–5</div>
+    <div class="co2-bars" id="co2Bars">
+      <div class="bar-col"><div class="bar" style="height:0%" data-h="15"><span class="bar-val">0.8t</span></div><div class="bar-label">Y1</div></div>
+      <div class="bar-col"><div class="bar" style="height:0%" data-h="28"><span class="bar-val">1.6t</span></div><div class="bar-label">Y2</div></div>
+      <div class="bar-col"><div class="bar" style="height:0%" data-h="42"><span class="bar-val">2.6t</span></div><div class="bar-label">Y3</div></div>
+      <div class="bar-col"><div class="bar navy-bar" style="height:0%" data-h="65"><span class="bar-val">4.1t</span></div><div class="bar-label">Y4</div></div>
+      <div class="bar-col"><div class="bar navy-bar" style="height:0%" data-h="85"><span class="bar-val">5.8t</span></div><div class="bar-label">Y5</div></div>
+    </div>
+    <div class="chart-legend">
+      <span><span class="dot" style="background:var(--emerald)"></span>Individual Offsets</span>
+      <span><span class="dot" style="background:var(--navy)"></span>Corporate Offsets</span>
+    </div>
+  </div>
+  <div class="palette-strip">
+    <div class="swatch navy">Navy</div>
+    <div class="swatch emerald">Emerald</div>
+    <div class="swatch slate">Slate</div>
+    <div class="swatch offwhite">Off-White</div>
+    <div class="swatch riso">Riso Red</div>
+  </div>
+</section>
+
+<!-- ============================ SPREAD 3: GRAPHENE HYDROGEN ============================ -->
+<section id="spread3" class="spread spread-transition">
+  <div class="dot-pattern-light" style="position:absolute;inset:0;opacity:.15"></div>
+  <div class="spread-header">
+    <div>
+      <div class="section-label" style="color:rgba(242,239,230,.5)">Project 03</div>
+      <div class="spread-num" style="color:rgba(242,239,230,.4)">SPREAD 03 / 05</div>
+    </div>
+    <div class="spread-title-block">
+      <div class="spread-subhead">GIIS RWCC Entrepreneurship Challenge · Second Place</div>
+    </div>
+  </div>
+  <div class="spread-headline">GRAPHENE<br>HYDROGEN</div>
+  <div class="spread-content">
+    <div class="spread-visual">
+      <div class="blueprint-svg">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+          <!-- Grid -->
+          <g stroke="rgba(31,165,114,.1)" stroke-width="0.5">
+            <line x1="0" y1="0" x2="400" y2="0"/><line x1="0" y1="50" x2="400" y2="50"/>
+            <line x1="0" y1="100" x2="400" y2="100"/><line x1="0" y1="150" x2="400" y2="150"/>
+            <line x1="0" y1="200" x2="400" y2="200"/><line x1="0" y1="250" x2="400" y2="250"/>
+            <line x1="0" y1="300" x2="400" y2="300"/>
+            <line x1="0" y1="0" x2="0" y2="300"/><line x1="50" y1="0" x2="50" y2="300"/>
+            <line x1="100" y1="0" x2="100" y2="300"/><line x1="150" y1="0" x2="150" y2="300"/>
+            <line x1="200" y1="0" x2="200" y2="300"/><line x1="250" y1="0" x2="250" y2="300"/>
+            <line x1="300" y1="0" x2="300" y2="300"/><line x1="350" y1="0" x2="350" y2="300"/>
+            <line x1="400" y1="0" x2="400" y2="300"/>
+          </g>
+          <!-- Vehicle frame -->
+          <g stroke="#2dd49b" stroke-width="1.5" fill="none">
+            <!-- Chassis -->
+            <path d="M 60 200 L 60 150 Q 60 130 80 125 L 120 110 Q 150 100 200 100 L 280 105 Q 320 110 340 130 L 350 150 L 350 200 Q 350 210 340 215 L 340 220 L 320 220 L 320 210 L 80 210 L 80 220 L 60 220 L 60 200"/>
+            <!-- Wheels -->
+            <circle cx="100" cy="215" r="22" stroke-width="1.5"/>
+            <circle cx="100" cy="215" r="10" stroke-width="1"/>
+            <circle cx="300" cy="215" r="22" stroke-width="1.5"/>
+            <circle cx="300" cy="215" r="10" stroke-width="1"/>
+            <!-- H2 tank -->
+            <rect x="140" y="130" width="100" height="40" rx="5" stroke-width="1"/>
+            <text x="190" y="155" font-family="monospace" font-size="8" fill="#2dd49b" text-anchor="middle">H₂ TANK</text>
+            <!-- Fuel cell -->
+            <rect x="260" y="135" width="50" height="30" rx="3" stroke-width="1"/>
+            <text x="285" y="153" font-family="monospace" font-size="6" fill="#2dd49b" text-anchor="middle">FC</text>
+            <!-- Graphene panels -->
+            <line x1="120" y1="110" x2="280" y2="108" stroke-dasharray="4 2"/>
+            <line x1="120" y1="118" x2="280" y2="116" stroke-dasharray="4 2"/>
+            <text x="200" y="106" font-family="monospace" font-size="6" fill="#2dd49b" text-anchor="middle">GRAPHENE COMPOSITE PANEL</text>
+            <!-- Connections -->
+            <line x1="240" y1="150" x2="260" y2="150" stroke-width="1.5"/>
+            <line x1="285" y1="165" x2="285" y2="180" stroke-width="1.5"/>
+            <line x1="285" y1="180" x2="310" y2="180" stroke-width="1.5"/>
+            <line x1="310" y1="180" x2="310" y2="200" stroke-width="1.5"/>
+            <!-- Dimensions -->
+            <line x1="60" y1="250" x2="350" y2="250" stroke="#2dd49b" stroke-width="0.5"/>
+            <line x1="60" y1="245" x2="60" y2="255" stroke="#2dd49b" stroke-width="0.5"/>
+            <line x1="350" y1="245" x2="350" y2="255" stroke="#2dd49b" stroke-width="0.5"/>
+            <text x="200" y="265" font-family="monospace" font-size="7" fill="#2dd49b" text-anchor="middle">2900mm</text>
+            <!-- Weight callout -->
+            <circle cx="200" cy="140" r="15" stroke="#e0404b" stroke-width="1" stroke-dasharray="2 2" opacity=".5"/>
+            <line x1="215" y1="140" x2="245" y2="85" stroke="#e0404b" stroke-width="0.5" opacity=".5"/>
+            <text x="248" y="83" font-family="monospace" font-size="6" fill="#e0404b" opacity=".7">−40% WEIGHT</text>
+          </g>
+          <!-- Annotation circles -->
+          <g fill="none" stroke="#2dd49b" stroke-width="1" opacity=".4">
+            <circle cx="100" cy="215" r="28"/>
+            <circle cx="300" cy="215" r="28"/>
+            <circle cx="190" cy="150" r="65"/>
+          </g>
+          <text x="20" y="20" font-family="monospace" font-size="8" fill="#2dd49b" opacity=".6">FIG.03 — H₂ VEHICLE SCHEMATIC</text>
+          <text x="20" y="285" font-family="monospace" font-size="6" fill="#2dd49b" opacity=".4">SCALE 1:50 · REV.02</text>
+        </svg>
+      </div>
+    </div>
+    <div class="spread-copy">
+      <p class="lead">A lightweight hydrogen-powered vehicle frame using graphene-reinforced composites — halving weight while doubling structural integrity.</p>
+      <p>Built for the <strong>GIIS RWCC Entrepreneurship Challenge</strong>, this concept vehicle replaces traditional steel chassis members with a <strong>graphene-infused polymer composite</strong>, achieving a 40% weight reduction without sacrificing crash safety ratings. The frame houses a compressed hydrogen tank and a compact fuel cell stack — the only emission is water.</p>
+      <p>The engineering thesis: <strong>weight is the enemy of efficiency</strong>. By reducing mass at the structural level, the vehicle requires less energy to move, extending range per kilogram of hydrogen. The graphene composite also offers superior thermal dissipation, protecting the fuel cell under load.</p>
+      <p>The project placed <strong>Second</strong>, cited for its material science depth and commercial feasibility as a near-term sustainable transport solution.</p>
+    </div>
+  </div>
+  <div class="palette-strip">
+    <div class="swatch navy">Navy</div>
+    <div class="swatch emerald">Emerald</div>
+    <div class="swatch slate">Slate</div>
+    <div class="swatch offwhite">Off-White</div>
+    <div class="swatch riso">Riso Red</div>
+  </div>
+</section>
+
+<!-- ============================ SPREAD 4: C² STEM RACING ============================ -->
+<section id="spread4" class="spread spread-transition">
+  <div class="grid-bg"></div>
+  <div class="spread-header">
+    <div>
+      <div class="section-label">Project 04</div>
+      <div class="spread-num">SPREAD 04 / 05</div>
+    </div>
+    <div class="spread-title-block">
+      <div class="spread-subhead">C² STEM Racing 2025 · Resource Manager</div>
+    </div>
+  </div>
+  <div class="spread-headline">RESOURCE<br>MANAGER</div>
+  <div class="spread-content">
+    <div class="spread-visual">
+      <div class="racing-action">
+        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="motionGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#e0404b" stop-opacity="0"/>
+              <stop offset="50%" stop-color="#e0404b" stop-opacity=".4"/>
+              <stop offset="100%" stop-color="#e0404b" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- Motion lines -->
+          <rect x="0" y="80" width="300" height="2" fill="url(#motionGrad)"/>
+          <rect x="0" y="100" width="300" height="1" fill="url(#motionGrad)" opacity=".6"/>
+          <rect x="0" y="120" width="300" height="3" fill="url(#motionGrad)" opacity=".4"/>
+          <!-- Car silhouette -->
+          <g fill="#f2efe6" opacity=".9">
+            <path d="M 80 130 Q 75 110 95 100 L 130 92 Q 150 88 175 92 L 210 100 Q 230 105 240 115 L 245 130 L 245 145 Q 245 150 240 150 L 85 150 Q 80 150 80 145 Z"/>
+ </g>
+          <g fill="#1a1a1a">
+            <circle cx="105" cy="150" r="14"/>
+            <circle cx="215" cy="150" r="14"/>
+          </g>
+          <g fill="#e0404b">
+            <circle cx="105" cy="150" r="5"/>
+            <circle cx="215" cy="150" r="5"/>
+          </g>
+          <!-- Speed text -->
+          <text x="150" y="75" font-family="Impact,sans-serif" font-size="20" fill="#f2efe6" text-anchor="middle" opacity=".15">C²</text>
+          <text x="150" y="180" font-family="monospace" font-size="6" fill="#f2efe6" text-anchor="middle" opacity=".3">CARBON COMMANDER · HEAT 3</text>
+        </svg>
+      </div>
+    </div>
+    <div class="spread-copy">
+      <p class="lead">Coordinating operations, logistics, and team execution for C² STEM Racing 2025 — where every second of pit time is a calculated variable.</p>
+      <p>As <strong>Resource Manager</strong> for the C² STEM Racing team, Johann owned the operational backbone of a competitive engineering programme. His remit: budget allocation, material procurement, schedule optimisation, and cross-functional coordination between the design, fabrication, and racing sub-teams.</p>
+      <p>The role demanded a dual mindset — <strong>logistical precision</strong> (ensuring parts arrived on time, budgets held, and testing schedules weren't compromised) and <strong>adaptive problem-solving</strong> (re-allocating resources mid-competition when a component failed or a deadline shifted). Every decision was documented, every trade-off was costed.</p>
+    </div>
+  </div>
+  <div class="timeline-graphic" id="timelineGraphic">
+    <div class="section-label">FIG.04 — Project Phases</div>
+    <div class="timeline-line">
+      <div class="timeline-node" style="left:5%">
+        <div class="phase">01</div>
+        <div class="dot"></div>
+        <div class="label">R&D<br>Design</div>
+      </div>
+      <div class="timeline-node" style="left:27%">
+        <div class="phase">02</div>
+        <div class="dot"></div>
+        <div class="label">Procurement<br>Budgeting</div>
+      </div>
+      <div class="timeline-node" style="left:49%">
+        <div class="phase">03</div>
+        <div class="dot"></div>
+        <div class="label">Fabrication<br>Testing</div>
+      </div>
+      <div class="timeline-node" style="left:71%">
+        <div class="phase">04</div>
+        <div class="dot"></div>
+        <div class="label">Optimisation<br>Iterate</div>
+      </div>
+      <div class="timeline-node active" style="left:93%">
+        <div class="phase">05</div>
+        <div class="dot"></div>
+        <div class="label">Race<br>Day</div>
+      </div>
+    </div>
+  </div>
+  <div class="palette-strip">
+    <div class="swatch navy">Navy</div>
+    <div class="swatch emerald">Emerald</div>
+    <div class="swatch slate">Slate</div>
+    <div class="swatch offwhite">Off-White</div>
+    <div class="swatch riso">Riso Red</div>
+  </div>
+</section>
+
+<!-- ============================ SPREAD 5: LOCAI ============================ -->
+<section id="spread5" class="spread spread-transition">
+  <div class="grid-bg"></div>
+  <div class="spread-header">
+    <div>
+      <div class="section-label">Project 05</div>
+      <div class="spread-num">SPREAD 05 / 05</div>
+    </div>
+    <div class="spread-title-block">
+      <div class="spread-subhead">AI for the Elderly · Singapore</div>
+    </div>
+  </div>
+  <div class="spread-headline">LOCAI<br>· CO-FOUNDER</div>
+  <div class="spread-content">
+    <div class="spread-visual">
+      <div class="locai-logo" id="locaiLogo">
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="60" r="50" class="stroke-path" stroke-linecap="round"/>
+          <path d="M 35 55 Q 35 40 50 40 Q 65 40 65 55 L 65 75 Q 65 80 60 80 L 40 80 Q 35 80 35 75 Z" class="stroke-path" stroke-linejoin="round"/>
+          <path d="M 65 50 Q 75 45 85 50 Q 90 55 88 62 Q 85 68 78 66 L 65 64" class="stroke-path" stroke-linejoin="round"/>
+          <circle cx="45" cy="58" r="2" fill="#0b1f3a"/>
+          <path d="M 42 68 Q 48 72 52 68" class="stroke-path" stroke-linecap="round"/>
+          <path d="M 80 40 Q 90 35 95 45" class="stroke-path" stroke-linecap="round" stroke-dasharray="3 2"/>
+          <path d="M 82 55 Q 92 50 95 58" class="stroke-path" stroke-linecap="round" stroke-dasharray="3 2"/>
+        </svg>
+      </div>
+      <div class="locai-tagline">Local AI · Global Care</div>
+      <div class="locai-interface">
+        <div class="panel">
+          <div class="ph"></div><div class="ph"></div><div class="ph"></div>
+          <div style="font-size:.45rem;color:var(--slate);margin-top:4px">Health Monitor</div>
+        </div>
+        <div class="panel">
+          <div class="ph"></div><div class="ph"></div><div class="ph"></div>
+          <div style="font-size:.45rem;color:var(--slate);margin-top:4px">Daily Assistant</div>
+        </div>
+      </div>
+    </div>
+    <div class="spread-copy">
+      <p class="lead">An AI literacy initiative designed to empower Singapore's aging communities and their caregivers — accessible, dignified, and deeply local.</p>
+<p><strong>LOCAI</strong> is an initiative born conviction: technology should be accessible to those who need it most. Singapore's rapidly aging population faces digital exclusion, and both seniors and caregivers often lack the confidence to engage with AI tools. LOCAI bridges this gap through <strong>hands-on education and training</strong> delivered in local languages and dialects, adapted to cultural context.</p>
+<p>The initiative combines: <strong>guided AI workshops</strong> for seniors and caregivers to build practical digital skills, <strong>simplified tool training</strong> on everyday AI applications for health, communication, and daily tasks, and a <strong>peer support network</strong> that connects trained caregivers with elders to reinforce learning and foster confidence. All sessions are designed to be patient, jargon-free, and culturally sensitive.</p>
+<p>The initiative is currently in <strong>early-stage development</strong> with pilot conversations underway with eldercare facilities in Singapore.</p>
+    </div>
+  </div>
+  <div class="palette-strip">
+    <div class="swatch navy">Navy</div>
+    <div class="swatch emerald">Emerald</div>
+    <div class="swatch slate">Slate</div>
+    <div class="swatch offwhite">Off-White</div>
+    <div class="swatch riso">Riso Red</div>
+  </div>
+</section>
+
+<!-- ============================ IMPACT METRICS ============================ -->
+<section id="metrics" class="spread-transition">
+  <div class="section-label">Impact / By The Numbers</div>
+  <div class="spread-headline" style="color:var(--off-white)">BY THE<br>NUMBERS</div>
+  <div class="metrics-grid">
+    <div class="metric-cell">
+      <span class="metric-num count-up" data-target="3">0</span>
+      <span class="metric-label">Competitions Placed</span>
+      <span class="metric-sub">JA Trade · Progressio · RWCC</span>
+    </div>
+    <div class="metric-cell">
+      <span class="metric-num count-up" data-target="1">0</span>
+      <span class="metric-label">Venture Co-Founded</span>
+      <span class="metric-sub">LOCAI · AI for Elderly</span>
+    </div>
+    <div class="metric-cell">
+      <span class="metric-num count-up" data-target="1">0</span>
+      <span class="metric-label">AI Course Completed</span>
+      <span class="metric-sub">Blue Dot Impact · AI Safety</span>
+    </div>
+    <div class="metric-cell">
+      <span class="metric-num count-up" data-target="1">0</span>
+      <span class="metric-label">STEM Racing Event Managed</span>
+      <span class="metric-sub">C² Racing 2025 · Resource Manager</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ DOWNLOADABLES ============================ -->
+<section id="downloads" class="spread-transition">
+  <div class="grid-bg"></div>
+  <div class="section-label">Appendix / Downloadables</div>
+  <div class="spread-headline">FILE<br>TABS</div>
+  <p style="font-family:var(--mono);font-size:.7rem;color:var(--slate);margin:16px 0 0;letter-spacing:.05em;max-width:50ch">
+    Drag the file tabs across the grid. Release to snap. Pinch to resize on touch devices.
+  </p>
+  <div class="downloads-container" id="downloadsContainer">
+    <div class="file-tab" id="tab1" style="left:0px;top:0px">
+      <div class="tab-type">PDF</div>
+      <div class="tab-head"><span>FILE_01</span><div class="grip"><span></span><span></span><span></span></div></div>
+      <div class="tab-body">
+        <div class="tab-icon"><div class="ext">PDF</div></div>
+        <div class="tab-name">LOCAI Pitch Deck</div>
+        <div class="tab-download" onclick="window.open('./LOCAI_YFC2026_Presentation.pptx.pdf')">↓ Download</div>
+      </div>
+    </div>
+    <div class="file-tab" id="tab2" style="left:240px;top:60px">
+      <div class="tab-type">PDF</div>
+      <div class="tab-head"><span>FILE_02</span><div class="grip"><span></span><span></span><span></span></div></div>
+      <div class="tab-body">
+        <div class="tab-icon"><div class="ext">PDF</div></div>
+        <div class="tab-name">Circular Fashion Concept</div>
+        <div class="tab-download" onclick="window.open('./fedex_international_trade_%20challenge.pdf')">↓ Download</div>
+      </div>
+    </div>
+    <div class="file-tab" id="tab3" style="left:100px;top:240px">
+      <div class="tab-type">PDF</div>
+      <div class="tab-head"><span>FILE_03</span><div class="grip"><span></span><span></span><span></span></div></div>
+      <div class="tab-body">
+        <div class="tab-icon"><div class="ext">PDF</div></div>
+        <div class="tab-name">Rent A Tree Deck</div>
+         <div class="tab-download" onclick="window.open('./cloud.pdf')">↓ Download</div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============================ CONTACT ============================ -->
+<section id="contact" class="spread-transition">
+  <div class="sg-map-bg">
+    <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#f2efe6" stroke-width="1">
+      <!-- Simplified Singapore map shape -->
+      <path d="M 250 150 Q 230 140 220 150 L 210 165 Q 200 170 195 180 L 190 200 L 200 220 Q 210 235 225 240 L 250 245 Q 270 250 290 245 L 310 235 Q 325 225 335 210 L 340 190 Q 338 175 325 165 L 300 155 Q 275 148 250 150 Z" stroke-width="2"/>
+      <path d="M 340 180 Q 350 175 360 180 L 370 190 Q 375 200 370 210 L 360 215 Q 350 215 345 210 L 340 200 Z" stroke-width="1.5"/>
+      <path d="M 380 195 Q 390 190 400 195 L 410 205 Q 412 215 405 220 L 390 222 Q 380 220 378 210 Z" stroke-width="1"/>
+      <path d="M 420 180 Q 435 175 450 180 L 470 185 Q 490 190 510 200 L 530 210 Q 550 215 570 210 L 590 200 Q 605 190 615 175 L 620 160 Q 615 145 600 140 L 570 135 Q 540 130 510 135 L 470 145 Q 440 150 425 160 Z" stroke-width="2"/>
+      <path d="M 420 230 Q 435 225 450 230 L 465 240 Q 470 250 460 255 L 445 257 Q 430 255 425 245 Z" stroke-width="1"/>
+      <path d="M 500 240 Q 520 235 540 240 L 555 250 Q 560 260 550 265 L 525 267 Q 505 265 498 255 Z" stroke-width="1.5"/>
+      <path d="M 580 220 Q 595 215 610 220 L 625 230 Q 630 240 620 245 L 600 247 Q 585 245 580 235 Z" stroke-width="1"/>
+      <!-- Grid lines for map texture -->
+      <g stroke-width="0.3" opacity=".5">
+        <line x1="200" y1="100" x2="650" y2="100"/>
+        <line x1="200" y1="150" x2="650" y2="150"/>
+        <line x1="200" y1="200" x2="650" y2="200"/>
+        <line x1="200" y1="250" x2="650" y2="250"/>
+        <line x1="200" y1="300" x2="650" y2="300"/>
+        <line x1="200" y1="100" x2="200" y2="300"/>
+        <line x1="275" y1="100" x2="275" y2="300"/>
+        <line x1="350" y1="100" x2="350" y2="300"/>
+        <line x1="425" y1="100" x2="425" y2="300"/>
+        <line x1="500" y1="100" x2="500" y2="300"/>
+        <line x1="575" y1="100" x2="575" y2="300"/>
+        <line x1="650" y1="100" x2="650" y2="300"/>
+      </g>
+      <text x="400" y="340" font-family="monospace" font-size="8" fill="#f2efe6" text-anchor="middle" opacity=".4">1°21′N 103°49′E · SINGAPORE</text>
+    </svg>
+  </div>
+  <div class="section-label" style="color:rgba(242,239,230,.5)">Contact / Last Page</div>
+  <div class="contact-headline">
+    LET'S<br>
+    <span class="ln2">CONNECT</span>
+  </div>
+  <a href="mailto:johann.thalachira@gmail.com" class="email-block">johann.thalachira@gmail.com</a>
+  <div class="social-links">
+    <a href="https://www.linkedin.com/in/johann-joseph-antony-58923b2a8" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+    <a href="https://github.com/JohannJosephAntony" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+  </div>
+  <div class="footer-bar">
+    <span>Johann Joseph Antony · Annual Report Vol. I · 2025</span>
+    <span>Designed in Singapore · Set in Anton & Archivo</span>
+  </div>
+</section>
+
+<script>
+// ============================================================
+// KINETIC TYPOGRAPHY — Hero name letters stagger in
+// ============================================================
+(function(){
+  const wraps = document.querySelectorAll('.kinetic-wrap');
+  const directions = [
+    {x:-800,y:-400},{x:800,y:-400},{x:-800,y:400},{x:800,y:400},
+    {x:0,y:-600},{x:0,y:600},{x:-1000,y:0},{x:1000,y:0}
+  ];
+  let letterIndex = 0;
+  wraps.forEach(wrap => {
+    const text = wrap.dataset.text;
+    const frag = document.createDocumentFragment();
+    for(let i = 0; i < text.length; i++){
+      const span = document.createElement('span');
+      span.className = 'kinetic-letter';
+      span.textContent = text[i] === ' ' ? '\u00A0' : text[i];
+      span.style.display = 'inline-block';
+      frag.appendChild(span);
+    }
+    wrap.appendChild(frag);
+  });
+
+  function animateKinetic(){
+    const letters = document.querySelectorAll('.kinetic-letter');
+    letters.forEach((letter, i) => {
+      const dir = directions[Math.floor(Math.random()*directions.length)];
+      letter.style.transform = `translate(${dir.x}px, ${dir.y}px) rotate(${(Math.random()-0.5)*60}deg)`;
+      letter.style.transition = 'none';
+      setTimeout(() => {
+        letter.style.transition = 'transform .8s cubic-bezier(.34,1.56,.64,1), opacity .5s ease';
+        letter.style.transform = 'translate(0,0) rotate(0deg)';
+        letter.style.opacity = '1';
+      }, 50 + i * 45);
+    });
+  }
+
+  window.addEventListener('load', () => {
+    setTimeout(animateKinetic, 200);
+  });
+})();
+
+// ============================================================
+// CUSTOM CURSOR + RISOGRAPH DOT TRAIL
+// ============================================================
+(function(){
+  if(window.matchMedia('(max-width:900px)').matches) return;
+  const cursor = document.getElementById('cursorDot');
+  let lastX = 0, lastY = 0;
+  let trailThrottle = 0;
+  const colors = ['var(--emerald)','var(--navy)'];
+
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+
+    const now = performance.now();
+    if(now - trailThrottle > 35){
+      trailThrottle = now;
+      const dot = document.createElement('div');
+      dot.className = 'trail-dot';
+      const size = 4 + Math.random() * 6;
+      dot.style.width = size + 'px';
+      dot.style.height = size + 'px';
+      dot.style.left = e.clientX + 'px';
+      dot.style.top = e.clientY + 'px';
+      const color = colors[Math.floor(Math.random()*colors.length)];
+      dot.style.background = color === 'var(--emerald)' ? '#1fa572' : '#0b1f3a';
+      dot.style.opacity = '0.4';
+      document.body.appendChild(dot);
+      setTimeout(() => dot.remove(), 800);
+    }
+    lastX = e.clientX; lastY = e.clientY;
+  });
+
+  // Cursor hover effect
+  document.querySelectorAll('a, button, .file-tab, .tab-download, .play-btn, .email-block, .social-links a').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+})();
+
+// ============================================================
+// SCROLL PROGRESS + PAGE INDICATOR
+// ============================================================
+(function(){
+  const progress = document.getElementById('scrollProgress');
+  const pageNum = document.getElementById('pageNum');
+  const barFill = document.getElementById('barFill');
+  const sections = document.querySelectorAll('section');
+  const total = sections.length;
+
+  function updateScroll(){
+    const scrollTop = window.scrollY;
+    const docHeight = document.body.scrollHeight - window.innerHeight;
+    const pct = (scrollTop / docHeight) * 100;
+    progress.style.width = pct + '%';
+
+    // Determine current section
+    let current = 1;
+    sections.forEach((sec, i) => {
+      const rect = sec.getBoundingClientRect();
+      if(rect.top <= window.innerHeight * 0.5 && rect.bottom >= window.innerHeight * 0.3){
+        current = i + 1;
+      }
+    });
+    pageNum.textContent = String(current).padStart(2, '0');
+    barFill.style.width = (current / total * 100) + '%';
+  }
+
+  window.addEventListener('scroll', updateScroll, {passive:true});
+  updateScroll();
+})();
+
+// ============================================================
+// SPREAD TRANSITIONS — Cross-fade with horizontal slide
+// ============================================================
+(function(){
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+      }
+    });
+  }, {threshold: 0.12});
+
+  document.querySelectorAll('.spread-transition').forEach(el => observer.observe(el));
+})();
+
+// ============================================================
+// FINALIST BADGE — Spin 360 once on scroll into view
+// ============================================================
+(function(){
+  const badge = document.getElementById('finalistBadge');
+  if(!badge) return;
+  let spun = false;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting && !spun){
+        spun = true;
+        badge.classList.add('spin-once');
+        setTimeout(() => badge.classList.remove('spin-once'), 1000);
+      }
+    });
+  }, {threshold: 0.4});
+  observer.observe(badge);
+})();
+
+// ============================================================
+// LOCAI LOGO — Stroke draw animation on scroll into view
+// ============================================================
+(function(){
+  const logo = document.getElementById('locaiLogo');
+  if(!logo) return;
+  let drawn = false;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting && !drawn){
+        drawn = true;
+        logo.classList.add('draw');
+      }
+    });
+  }, {threshold: 0.3});
+  observer.observe(logo);
+})();
+
+// ============================================================
+// CO2 BAR CHART — Animate on scroll into view
+// ============================================================
+(function(){
+  const chart = document.getElementById('co2Bars');
+  if(!chart) return;
+  let animated = false;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting && !animated){
+        animated = true;
+        chart.querySelectorAll('.bar').forEach((bar, i) => {
+          setTimeout(() => {
+            bar.style.height = bar.dataset.h + '%';
+          }, i * 120);
+        });
+      }
+    });
+  }, {threshold: 0.3});
+  observer.observe(chart);
+})();
+
+// ============================================================
+// COUNT-UP NUMBERS — Impact metrics
+// ============================================================
+(function(){
+  const counters = document.querySelectorAll('.count-up');
+  let animated = false;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting && !animated){
+        animated = true;
+        counters.forEach(counter => {
+          const target = parseInt(counter.dataset.target);
+          const duration = 1400;
+          const start = performance.now();
+          function tick(now){
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            counter.textContent = Math.floor(eased * target);
+            if(progress < 1) requestAnimationFrame(tick);
+            else counter.textContent = target;
+          }
+          requestAnimationFrame(tick);
+        });
+      }
+    });
+  }, {threshold: 0.3});
+  observer.observe(document.getElementById('metrics'));
+})();
+
+// ============================================================
+// DRAGGABLE FILE TABS — Snap to grid
+// ============================================================
+(function(){
+  const tabs = document.querySelectorAll('.file-tab');
+  const GRID = 20;
+  let activeTab = null;
+  let startX, startY, initialLeft, initialTop;
+
+  tabs.forEach(tab => {
+    // Initialize positions from inline styles
+    const left = parseInt(tab.style.left) || 0;
+    const top = parseInt(tab.style.top) || 0;
+    tab.style.left = left + 'px';
+    tab.style.top = top + 'px';
+
+    tab.addEventListener('mousedown', startDrag);
+    tab.addEventListener('touchstart', startDragTouch, {passive:false});
+  });
+
+  function startDrag(e){
+    if(e.target.classList.contains('tab-download')) return;
+    e.preventDefault();
+    activeTab = e.currentTarget;
+    activeTab.classList.remove('snapping');
+    startX = e.clientX;
+    startY = e.clientY;
+    initialLeft = parseInt(activeTab.style.left) || 0;
+    initialTop = parseInt(activeTab.style.top) || 0;
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('mouseup', endDrag);
+  }
+
+  function startDragTouch(e){
+    if(e.target.classList.contains('tab-download')) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    activeTab = e.currentTarget;
+    activeTab.classList.remove('snapping');
+    startX = touch.clientX;
+    startY = touch.clientY;
+    initialLeft = parseInt(activeTab.style.left) || 0;
+    initialTop = parseInt(activeTab.style.top) || 0;
+    document.addEventListener('touchmove', onDragTouch, {passive:false});
+    document.addEventListener('touchend', endDrag);
+  }
+
+  function onDrag(e){
+    if(!activeTab) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    activeTab.style.left = (initialLeft + dx) + 'px';
+    activeTab.style.top = (initialTop + dy) + 'px';
+  }
+
+  function onDragTouch(e){
+    if(!activeTab) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    const dx = touch.clientX - startX;
+    const dy = touch.clientY - startY;
+    activeTab.style.left = (initialLeft + dx) + 'px';
+    activeTab.style.top = (initialTop + dy) + 'px';
+  }
+
+  function endDrag(){
+    if(!activeTab) return;
+    // Snap to grid
+    activeTab.classList.add('snapping');
+    const left = parseInt(activeTab.style.left) || 0;
+    const top = parseInt(activeTab.style.top) || 0;
+    const snappedLeft = Math.round(left / GRID) * GRID;
+    const snappedTop = Math.round(top / GRID) * GRID;
+    activeTab.style.left = snappedLeft + 'px';
+    activeTab.style.top = snappedTop + 'px';
+
+    // Constrain within container
+    const container = document.getElementById('downloadsContainer');
+    const tabRect = activeTab.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    let finalLeft = snappedLeft;
+    let finalTop = snappedTop;
+    if(snappedLeft < 0) finalLeft = 0;
+    if(snappedTop < 0) finalTop = 0;
+    activeTab.style.left = finalLeft + 'px';
+    activeTab.style.top = finalTop + 'px';
+
+    activeTab = null;
+    document.removeEventListener('mousemove', onDrag);
+    document.removeEventListener('mouseup', endDrag);
+    document.removeEventListener('touchmove', onDragTouch);
+    document.removeEventListener('touchend', endDrag);
+  }
+
+  // Pinch to resize on touch
+  let pinchInitialDist = 0;
+  let pinchInitialWidth = 0;
+  let pinchTab = null;
+
+  tabs.forEach(tab => {
+    tab.addEventListener('touchstart', (e) => {
+      if(e.touches.length === 2){
+        e.preventDefault();
+        pinchTab = e.currentTarget;
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        pinchInitialDist = Math.sqrt(dx*dx + dy*dy);
+        pinchInitialWidth = parseInt(getComputedStyle(pinchTab).width);
+      }
+    }, {passive:false});
+
+    tab.addEventListener('touchmove', (e) => {
+      if(e.touches.length === 2 && pinchTab){
+        e.preventDefault();
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        const scale = dist / pinchInitialDist;
+        const newWidth = Math.max(140, Math.min(400, pinchInitialWidth * scale));
+        pinchTab.style.width = newWidth + 'px';
+      }
+    }, {passive:false});
+
+    tab.addEventListener('touchend', () => {
+      if(pinchTab){ pinchTab = null; }
+    });
+  });
+})();
+
+// ============================================================
+// TIMELINE NODES — Sequential highlight on scroll into view
+// ============================================================
+(function(){
+  const timeline = document.getElementById('timelineGraphic');
+  if(!timeline) return;
+  const nodes = timeline.querySelectorAll('.timeline-node');
+  let triggered = false;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting && !triggered){
+        triggered = true;
+        nodes.forEach((node, i) => {
+          setTimeout(() => {
+            node.classList.add('active');
+            setTimeout(() => {
+              if(i < nodes.length - 1) node.classList.remove('active');
+            }, 400);
+          }, i * 300);
+        });
+        setTimeout(() => {
+          nodes[nodes.length - 1].classList.add('active');
+        }, (nodes.length - 1) * 300 + 400);
+      }
+    });
+  }, {threshold: 0.4});
+  observer.observe(timeline);
+})();
+
+// ============================================================
+// CRT FLICKER EFFECT
+// ============================================================
+(function(){
+  const screens = document.querySelectorAll('.crt-screen');
+  screens.forEach(screen => {
+    // Random subtle flicker
+    setInterval(() => {
+      if(Math.random() > 0.85){
+        screen.style.opacity = '0.92';
+        setTimeout(() => screen.style.opacity = '1', 50);
+      }
+    }, 2000);
+
+    // Play button interaction
+    const playBtn = screen.querySelector('.play-btn');
+    if(playBtn){
+      playBtn.addEventListener('click', () => {
+        const content = screen.querySelector('.crt-content');
+        content.innerHTML = '<div style="font-family:monospace;font-size:.6rem;color:#2dd49b;text-align:center;line-height:1.8">▌ SIGNAL LOST<br>NO RECORDING FOUND<br><br>— CHECK ARCHIVE —</div>';
+      });
+    }
+  });
+})();
+
+// ============================================================
+// PREVENT CONTEXT MENU ON DRAGGABLES (smoother UX)
+// ============================================================
+document.querySelectorAll('.file-tab').forEach(tab => {
+  tab.addEventListener('contextmenu', e => e.preventDefault());
+});
+</script>
+</body>
+</html>
